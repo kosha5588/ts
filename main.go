@@ -29,7 +29,7 @@ func main() {
 	http.Handle("/assets/styles/", http.StripPrefix("/assets/styles/", http.FileServer(http.Dir("ts/Public/assets/styles"))))
 	http.Handle("/assets/scripts/", http.StripPrefix("/assets/scripts/", http.FileServer(http.Dir("ts/Public/assets/scripts"))))
 
-	log.Println("Сервер запущен на http://localhost:8080")
+	log.Println("Сервер запущен на http://localhost:8090")
 	log.Fatal(http.ListenAndServe(":8090", nil)) // Обработка ошибок
 }
 
