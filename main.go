@@ -30,11 +30,11 @@ func main() {
 	http.Handle("/scripts/", http.StripPrefix("/scripts/", http.FileServer(http.Dir("ts/Public/scripts"))))
 
 	log.Println("Сервер запущен на http://localhost:8080")
-	http.ListenAndServe(":8080", nil)
+	log.Fatal(http.ListenAndServe(":8090", nil)) // Обработка ошибок
 }
 
 func serveIndex(w http.ResponseWriter, r *http.Request) {
-	http.ServeFile(w, r, "ts/Public/index.html")
+	http.ServeFile(w, r, "Public/index.html")
 }
 
 func handleTasks(w http.ResponseWriter, r *http.Request) {
@@ -86,7 +86,7 @@ func watchFiles() {
 		time.Sleep(1 * time.Second)
 
 		// Проверяем время изменения файла index.html
-		info, err := os.Stat("ts/Public/index.html")
+		info, err := os.Stat("Public/index.html")
 		if err != nil {
 			log.Println("Ошибка при получении информации о файле:", err)
 			continue
