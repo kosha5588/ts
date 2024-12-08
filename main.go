@@ -26,8 +26,8 @@ func main() {
 	http.HandleFunc("/tasks", handleTasks)
 	http.HandleFunc("/ws", handleWebSocket) // Обработка WebSocket
 
-	http.Handle("/assets/styles/", http.StripPrefix("/assets/styles/", http.FileServer(http.Dir("ts/Public/assets/styles"))))
-	http.Handle("/assets/scripts/", http.StripPrefix("/assets/scripts/", http.FileServer(http.Dir("ts/Public/assets/scripts"))))
+	http.Handle("/assets/styles/", http.StripPrefix("/assets/styles/", http.FileServer(http.Dir("ts/Public/assets/styles/"))))
+	http.Handle("/assets/scripts/", http.StripPrefix("/assets/scripts/", http.FileServer(http.Dir("ts/Public/assets/scripts/"))))
 
 	log.Println("Сервер запущен на http://localhost:8090")
 	log.Fatal(http.ListenAndServe(":8090", nil)) // Обработка ошибок
