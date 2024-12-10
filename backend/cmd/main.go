@@ -1,130 +1,28 @@
 package main
 
 import (
-	"encoding/json"
 	"log"
 	"net/http"
-	"os"
-	"sync"
-	"time"
-
-	"github.com/gorilla/websocket"
 )
 
-var (
-	tasks []string
-	mu    sync.Mutex
-)
-
-var upgrader = websocket.Upgrader{}
-var clients = make(map[*websocket.Conn]bool)
+// Создается функция-обработчик "home", которая записывает байтовый слайс, содержащий
+// текст "Привет из Snippetbox" как тело ответа.
+func home(w http.ResponseWriter, r *http.Request) {
+	w.Write([]byte("Привет из сайт"))
+}
 
 func main() {
-	go watchFiles() // Запускаем функцию отслеживания файлов
+	// Используется функция http.NewServeMux() для инициализации нового рутера, затем
+	// функцию "home" регистрируется как обработчик для URL-шаблона "/".
+	mux := http.NewServeMux()
+	mux.HandleFunc("/", home)
 
-	http.HandleFunc("/", serveIndex)
-	http.HandleFunc("/tasks", handleTasks)
-	http.HandleFunc("/ws", handleWebSocket) // Обработка WebSocket
-
-	http.Handle("/styles/", http.StripPrefix("/styles/", http.FileServer(http.Dir("ts/Public/styles"))))
-	http.Handle("/scripts/", http.StripPrefix("/scripts/", http.FileServer(http.Dir("ts/Public/scripts"))))
-
-	log.Println("Сервер запущен на http://localhost:8080")
-	log.Fatal(http.ListenAndServe(":8090", nil)) // Обработка ошибок
-}
-
-func serveIndex(w http.ResponseWriter, r *http.Request) {
-	http.ServeFile(w, r, "Public/index.html")
-}
-
-func handleTasks(w http.ResponseWriter, r *http.Request) {
-	switch r.Method {
-	case http.MethodPost:
-		var newTask struct {
-			Task string `json:"task"`
-		}
-		if err := json.NewDecoder(r.Body).Decode(&newTask); err != nil {
-			http.Error(w, err.Error(), http.StatusBadRequest)
-			return
-		}
-
-		mu.Lock()
-		tasks = append(tasks, newTask.Task)
-		mu.Unlock()
-
-		w.Header().Set("Content-Type", "application/json")
-		json.NewEncoder(w).Encode(newTask)
-
-	case http.MethodDelete:
-		var taskToDelete struct {
-			Task string `json:"task"`
-		}
-		if err := json.NewDecoder(r.Body).Decode(&taskToDelete); err != nil {
-			http.Error(w, err.Error(), http.StatusBadRequest)
-			return
-		}
-
-		mu.Lock()
-		for i, task := range tasks {
-			if task == taskToDelete.Task {
-				tasks = append(tasks[:i], tasks[i+1:]...) // Удаляем задачу
-				break
-			}
-		}
-		mu.Unlock()
-
-		w.WriteHeader(http.StatusNoContent) // Успешное удаление, без содержимого
-	default:
-		http.Error(w, "Метод не поддерживается", http.StatusMethodNotAllowed)
-	}
-}
-
-func watchFiles() {
-	lastModTime := time.Now()
-
-	for {
-		time.Sleep(1 * time.Second)
-
-		// Проверяем время изменения файла index.html
-		info, err := os.Stat("Public/index.html")
-		if err != nil {
-			log.Println("Ошибка при получении информации о файле:", err)
-			continue
-		}
-
-		if info.ModTime().After(lastModTime) {
-			lastModTime = info.ModTime()
-			notifyClients()
-		}
-	}
-}
-
-func notifyClients() {
-	for client := range clients {
-		err := client.WriteMessage(websocket.TextMessage, []byte("reload"))
-		if err != nil {
-			log.Println("Ошибка при отправке сообщения клиенту:", err)
-			client.Close()
-			delete(clients, client)
-		}
-	}
-}
-
-func handleWebSocket(w http.ResponseWriter, r *http.Request) {
-	conn, err := upgrader.Upgrade(w, r, nil)
-	if err != nil {
-		log.Println("Ошибка при подключении WebSocket:", err)
-		return
-	}
-	defer conn.Close()
-
-	clients[conn] = true
-	for {
-		_, _, err := conn.ReadMessage()
-		if err != nil {
-			log.Println("Ошибка при чтении сообщения:", err)
-			delete(clients, conn)
-			break
-		}
-	}
+	// Используется функция http.ListenAndServe() для запуска нового веб-сервера.
+	// Мы передаем два параметра: TCP-адрес сети для прослушивания (в данном случае это "localhost:4000")
+	// и созданный рутер. Если вызов http.ListenAndServe() возвращает ошибку
+	// мы используем функцию log.Fatal() для логирования ошибок. Обратите внимание
+	// что любая ошибка, возвращаемая от http.ListenAndServe(), всегда non-nil.
+	log.Println("Запуск веб-сервера на http://127.0.0.1:8080")
+	err := http.ListenAndServe(":8080", mux)
+	log.Fatal(err)
 }
