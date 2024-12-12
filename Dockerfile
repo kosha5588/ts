@@ -28,7 +28,7 @@ COPY --from=builder /app/backend/cmd/my-web-app /usr/local/bin/my-web-app
 ENV DATABASE_URL=postgres://user:password@db:5432/mydb?sslmode=disable
 
 # Открываем порт
-EXPOSE 8080
+EXPOSE 8090
 
 # Запускаем приложение
 CMD ["my-web-app"]

@@ -10,7 +10,7 @@ import (
 
 func main() {
 	// Подключение к базе данных
-	dsn := "user:password@tcp(127.0.0.1:3306)/dbname"
+	dsn := "user:password@tcp(127.0.0.1:5432)/dbname"
 	db, err := sql.Open("mysql", dsn)
 	if err != nil {
 		log.Fatal(err)
