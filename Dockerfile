@@ -2,7 +2,7 @@
 FROM golang:1.20-buster AS builder
 
 # Устанавливаем рабочую директорию
-WORKDIR /app
+WORKDIR /ts
 
 # Копируем go.mod и go.sum для кэширования зависимостей
 COPY go.mod go.sum ./
@@ -12,8 +12,8 @@ RUN go mod download
 COPY ./backend/ ./backend/
 
 # Компилируем приложение
-WORKDIR /app/backend/cmd
-RUN go build -o my-web-app main.go
+WORKDIR /ts/backend/cmd
+RUN go build -o ts main.go
 
 # Используем чистый Debian для запуска
 FROM debian:bookworm-slim
@@ -22,13 +22,15 @@ FROM debian:bookworm-slim
 RUN apt-get update && apt-get install -y ca-certificates && rm -rf /var/lib/apt/lists/*
 
 # Копируем скомпилированное приложение из предыдущего этапа
-COPY --from=builder /app/backend/cmd/my-web-app /usr/local/bin/my-web-app
+COPY --from=builder /ts/backend/cmd/ts /usr/local/bin/ts
 
 # Указываем переменную окружения для конфигурации
 ENV DATABASE_URL=postgres://user:password@db:5432/mydb?sslmode=disable
+
+COPY ./Public/ ./Public/
 
 # Открываем порт
 EXPOSE 8090
 
 # Запускаем приложение
-CMD ["my-web-app"]
+CMD ["ts"]
