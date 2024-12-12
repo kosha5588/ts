@@ -8,10 +8,7 @@ import (
 // IndexHandler обрабатывает запросы к корневому маршруту
 func IndexHandler(w http.ResponseWriter, r *http.Request) {
 	// Загружаем шаблон
-	tmpl, err := template.ParseFiles(
-		"../../Public/index.html",
-		"../../Public/assets/styles/style.css",
-	)
+	tmpl, err := template.ParseFiles("../../Public/index.html")
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
@@ -23,7 +20,7 @@ func IndexHandler(w http.ResponseWriter, r *http.Request) {
 		CSS1  string
 	}{
 		Title: "Добро пожаловать на главную страницу!",
-		CSS1:  "assets/styles/style.css",
+		CSS1:  "/assets/styles/style.css",
 	}
 
 	// Выполняем шаблон и отправляем результат в ResponseWriter

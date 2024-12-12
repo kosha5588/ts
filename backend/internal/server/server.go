@@ -2,7 +2,6 @@ package server
 
 import (
 	"net/http"
-	"path/filepath"
 	"ts/backend/internal/handlers"
 )
 
@@ -18,11 +17,7 @@ func NewServer(port string) *Server {
 // ListenAndServe запускает сервер
 func (s *Server) ListenAndServe() error {
 	// Указываем путь к директории с публичными файлами
-	publicDir := filepath.Join("..", "..", "Public")
-
-	// Обработчик для статических файлов
-	fs := http.FileServer(http.Dir(publicDir))
-	http.Handle("/assets/", http.StripPrefix("/assets/", fs))
+	http.Handle("/assets/", http.StripPrefix("/assets/", http.FileServer(http.Dir("../../Public/assets/"))))
 
 	// Обработчик для шаблонов
 	http.HandleFunc("/", handlers.IndexHandler)
