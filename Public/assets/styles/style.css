@@ -1,5 +1,76 @@
 html {
-  width: 1600px;
-  height: 1200px;
   background-image: url(/Public/assets/images/fon.png);
+  box-sizing: border-box;
+  position: absolute;
+  left: -764;
+  right: 5;
+}
+body {
+  width: 1500px;
+  height: 1100px;
+  justify-content: center; 
+  align-items: center; 
+}
+.perent {
+  width: 1434px;
+  height: 1012px;
+  display: grid;
+  margin-left: 35px;
+  margin-top: 50px;
+}
+header {
+  display: flex; 
+  justify-content: space-between; 
+  align-items: center; 
+  padding: 10px 20px; 
+  height: 150px;
+  background-color: white;
+  opacity: 0.9;
+
+}
+
+.logo {
+  font-size: 24px; 
+  opacity: 1;
+  height: 65;
+  width: 185;
+}
+
+.nav-list {
+  display: flex; 
+  list-style-type: none; 
+  margin: 0; 
+  padding: 0; 
+}
+
+.nav-item {
+  margin: 0 15px;
+}
+
+.nav-item a {
+  color: black; 
+  text-decoration: none; 
+  padding: 8px 16px; 
+}
+
+.nav-item a:hover {
+  background-color: rgba(0, 0, 0, 0.185); 
+}
+
+.auth-buttons {
+  display: flex; 
+}
+
+.auth-button {
+  margin-left: 15px; 
+  padding: 8px 16px; 
+  background-color: green;
+  color: white; 
+  border: none; 
+  border-radius: 4px; 
+  cursor: pointer; 
+}
+
+.auth-button:hover {
+  background-color: black; 
 }

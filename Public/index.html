@@ -3,13 +3,14 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="assets/styles/style.css">
-    <title>Test</title>
+    <link rel="stylesheet" href="/assets/styles/style.css">
+    <title>{{.Title}}</title>
   </head>
   <body>
-  <header class="container">
+  <div class="perent">
+  <!-- <header class="container">
     <span class="logo">Logo</span>
-    <nav>
+    <nav class="navbar">
       <ul>
         <li class="activ"><a href="#">New</a></li>
         <li><a href="#">Popular</a></li>
@@ -22,8 +23,26 @@
       <button>Sign In</button>
       <button>Sign Up</button>
     </div>
-  </header>
-  <div class="present container">
+  </header> -->
+  
+<header>
+  <div class="logo"><img src="/Public/assets/images/Logo.png" alt="logo">
+  </div>
+  <nav>
+      <ul class="nav-list">
+          <li class="nav-item"><a href="#home">New</a></li>
+          <li class="nav-item"><a href="#about">Popular</a></li>
+          <li class="nav-item"><a href="#services">Gifts</a></li>
+          <li class="nav-item"><a href="#contact">Cards</a></li>
+          <li class="nav-item"><a href="#contact">Contacts</a></li>
+      </ul>
+  </nav>
+  <div class="auth-buttons">
+      <button class="auth-button">Sign Is</button>
+      <button class="auth-button">Sign Up</button>
+  </div>
+</header>
+  <div class="present-container">
     <div class="present-info">
       <h2>Greetings</h2>
       <h2>Santa is coming,</h2>
@@ -33,6 +52,7 @@
       <div class="button-explore "><button>Explore now</button></div>
     </div>
   </div>
+</div>
     <!-- <script src="/scripts/main.js"></script> -->
   </body>
 </html>
