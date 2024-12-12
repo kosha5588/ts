@@ -1,3 +1,5 @@
+
+/* Поменять цвета */
 html {
   background-image: url(/Public/assets/images/fon.png);
   box-sizing: border-box;
@@ -26,7 +28,6 @@ header {
   height: 150px;
   background-color: white;
   opacity: 0.9;
-
 }
 
 .logo {
@@ -73,4 +74,60 @@ header {
 
 .auth-button:hover {
   background-color: black; 
+}
+h2 {
+  font-family: "Yeseva One", serif;
+  font-style: normal;
+  font-size: 40px;
+}
+p {
+  font-family: "DM Sans", sans-serif;
+  font-optical-sizing: auto;
+  font-style: normal;
+  font-size: 15px;
+}
+.present-container {
+  background-color: white;
+  height: 862px;
+  opacity: 0.9;
+  display: flex;
+  justify-content: flex-start; 
+  align-items: center; 
+  padding-left: 20px; 
+}
+
+.present-info {
+  height: 400px;
+  margin-top: 15%;
+  width: 600px;
+  display: flex; 
+  flex-direction: column; 
+  justify-content: space-between; 
+  align-items: flex-start; 
+  padding: 10px;  
+  border-radius: 8px; 
+  line-height: 2px;
+  margin: auto 0;
+}
+
+.button-explore {
+  padding: 15px 30px; 
+  border-radius: 8px; 
+  border: none; 
+  cursor: pointer;
+  color: white; 
+  width: 226px;
+  height: 58px;
+  background-color: green;
+  margin-top: 20px; 
+  font-size: 16px; 
+}
+
+.button-explore:hover {
+  background-color:black; 
+}
+.claus {
+  width: 664px;
+  height: 725px;
+  margin-left: 50px;
 }
