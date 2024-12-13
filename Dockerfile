@@ -25,7 +25,7 @@ RUN apt-get update && apt-get install -y ca-certificates && rm -rf /var/lib/apt/
 COPY --from=builder /ts/backend/cmd/ts /usr/local/bin/ts
 
 # Указываем переменную окружения для конфигурации
-ENV DATABASE_URL=postgres://user:password@db:5432/mydb?sslmode=disable
+ENV DATABASE_URL=postgres://user:password@db:5432/db?sslmode=disable
 
 COPY ./Public/ ./Public/
 
