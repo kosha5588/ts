@@ -2,23 +2,13 @@
     "sqltools.connections": [
         {
             "previewLimit": 50,
-            "server": "0.0.0.0",
+            "server": "localhost",
             "port": 5432,
             "driver": "PostgreSQL",
             "name": "kosha",
-            "password": "password",
+            "database": "db",
             "username": "user",
-            "database": "mydb"
-        },
-        {
-            "previewLimit": 50,
-            "server": "172.18.0.2",
-            "port": 5432,
-            "driver": "PostgreSQL",
-            "database": "mydb",
-            "username": "user",
-            "password": "password",
-            "name": "kosha"
+            "password": "password"
         }
     ]
 }
