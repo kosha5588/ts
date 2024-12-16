@@ -21,6 +21,8 @@ func (s *Server) ListenAndServe() error {
 
 	// Обработчик для шаблонов
 	http.HandleFunc("/", handlers.IndexHandler)
+	http.HandleFunc("/reg", handlers.RegHandler)
+	http.HandleFunc("/signIn", handlers.SignInHandler)
 
 	// Запускаем HTTP сервер
 	return http.ListenAndServe(s.port, nil)
